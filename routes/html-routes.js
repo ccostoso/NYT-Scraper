@@ -18,17 +18,6 @@ router.get("/", function (req, res) {
 
         console.log(hbsUser);
     })
-
-    db.Burger.findAll()
-        .then(function(data) {
-            var hbsObject = {
-                burger: data
-            }
-            
-            res.render("index", hbsObject);
-
-            console.log(data);
-    });
 });
 
 // Export routes for server.js to use.
