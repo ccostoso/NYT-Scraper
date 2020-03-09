@@ -1,3 +1,13 @@
 <div class="container d-flex-flex-column justify-content-center">
-    
+    <div class="jumbotron vh-100">
+        <h1 class="display-4 mt-auto">New York Times Scraper</h1>
+        <h3 class="mb-auto">Using MongoDB!</h3>
+    </div>
 </div>
+<main class="m-0">
+    {{#each article}}
+        {{#unless dataValues.saved}}
+            {{> articles/not-saved saved=true}}
+        {{/unless}}
+    {{/each}}
+</main>
