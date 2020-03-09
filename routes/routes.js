@@ -9,39 +9,39 @@ const db = require("../models");
 // Create all our routes and set up logic within those routes where required.
 router.get("/", function (req, res) {
     // First, we grab the body of the html with axios
-    axios.get("http://www.nytimes.com/").then(function (response) {
-        // Then, we load that into cheerio and save it to $ for a shorthand selector
-        const $ = cheerio.load(response.data);
+    // axios.get("http://www.nytimes.com/").then(function (response) {
+    //     // Then, we load that into cheerio and save it to $ for a shorthand selector
+    //     const $ = cheerio.load(response.data);
 
-        // Now, we grab every h2 within a div (within an a) tag, and do the following:
-        $("a div h2").each(function (i, element) {
-            // Save an empty result object
-            let result = {};
+    //     // Now, we grab every h2 within a div (within an a) tag, and do the following:
+    //     $("a div h2").each(function (i, element) {
+    //         // Save an empty result object
+    //         let result = {};
 
-            // Add the text and href of every link, and save them as properties of the result object
-            result.title = $(this)
-                .text();
-            result.subheading = $(this)
-                .parent()
-                .parent()
-                .find("p")
-                .text();
-            result.link = $(this)
-                .parent()
-                .parent()
-                .attr("href");
-            result.saved = false;
+    //         // Add the text and href of every link, and save them as properties of the result object
+    //         result.title = $(this)
+    //             .text();
+    //         result.subheading = $(this)
+    //             .parent()
+    //             .parent()
+    //             .find("p")
+    //             .text();
+    //         result.link = $(this)
+    //             .parent()
+    //             .parent()
+    //             .attr("href");
+    //         result.saved = false;
 
-            // Create a new Article using the `result` object built from scraping
-            db.Article.create(result)
-                .then(function (dbArticle) {
-                    // View the added result in the console
-                    console.log(dbArticle);
-                })
-                .catch(function (err) {
-                    // If an error occurred, log it
-                    console.log(err);
-                });
+            // // Create a new Article using the `result` object built from scraping
+            // db.Article.create(result)
+            //     .then(function (dbArticle) {
+            //         // View the added result in the console
+            //         console.log(dbArticle);
+            //     })
+            //     .catch(function (err) {
+            //         // If an error occurred, log it
+            //         console.log(err);
+            //     });
 
             db.Article.find({})
                 .then(function(dbArticles) {
@@ -51,12 +51,13 @@ router.get("/", function (req, res) {
                     }
 
                     res.render("index", hbsObject);
+                    console.log("hbsObject:", hbsObject)
                 })
                 .catch(function(err) {
                     console.log(err)
                 })
-        });
-    });
+        // });
+    // });
 });
 
 // Export routes for server.js to use.

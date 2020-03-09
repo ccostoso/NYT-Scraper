@@ -1,10 +1,11 @@
-<div class="card">
+<div class="card my-2">
     <div class="card-header">
-        <h3 class="card-title">{{artlce.title}}</h3>
+        <h3 class="card-title">{{this.title}}</h3>
     </div>
     <div class="card-body">
-        <a href="{{article.link}}"></a>{{article.subheading}}</a>
-        <br>
+        <a href="{{this.link}}"></a>
+            <p>{{this.subheading}}</p>
+        </a>
         <button type="button" class="btn btn-secondary">Add to Favorites!</button>
     </div>
 </div>
