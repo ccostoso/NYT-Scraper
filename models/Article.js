@@ -18,8 +18,8 @@ const ArticleSchema = new Schema({
       trim: true,
       required: "Entry must have article subheading."
   },
-  // `url` must be of type String
-  url: {
+  // `link` must be of type String
+  link: {
       type: String,
       trim: true,
       required: "Entry must have URL."

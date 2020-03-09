@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const axios = require('axios');
 
 // Requiring our Todo model
 const db = require("../models");
@@ -12,18 +13,23 @@ router.get("/", function (req, res) {
         const $ = cheerio.load(response.data);
 
         // Now, we grab every h2 within an article tag, and do the following:
-        $("h2").each(function (i, element) {
+        $("a div h2").each(function (i, element) {
             // Save an empty result object
             let result = {};
 
             // Add the text and href of every link, and save them as properties of the result object
             result.title = $(this)
-                .children("span")
+                .text();
+            result.subheading = $(this)
+                .parent()
+                .parent()
+                .find("p")
                 .text();
             result.link = $(this)
                 .parent()
                 .parent()
                 .attr("href");
+            result.saved = false;
 
             // Create a new Article using the `result` object built from scraping
             db.Article.create(result)
@@ -39,7 +45,7 @@ router.get("/", function (req, res) {
 
         // Send a message to the client
         const hbsObject = {
-            user: dbUser
+            article: result
         }
 
         res.render("index", hbsObject);
