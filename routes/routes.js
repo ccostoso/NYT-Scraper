@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
+const cheerio = require('cheerio');
 
 // Requiring our Todo model
 const db = require("../models");
@@ -12,7 +13,7 @@ router.get("/", function (req, res) {
         // Then, we load that into cheerio and save it to $ for a shorthand selector
         const $ = cheerio.load(response.data);
 
-        // Now, we grab every h2 within an article tag, and do the following:
+        // Now, we grab every h2 within a div (within an a) tag, and do the following:
         $("a div h2").each(function (i, element) {
             // Save an empty result object
             let result = {};
@@ -41,14 +42,20 @@ router.get("/", function (req, res) {
                     // If an error occurred, log it
                     console.log(err);
                 });
+
+            db.Article.find({})
+                .then(function(dbArticles) {
+                    // Render the results to Handlebars
+                    const hbsObject = {
+                        article: dbArticles
+                    }
+
+                    res.render("index", hbsObject);
+                })
+                .catch(function(err) {
+                    console.log(err)
+                })
         });
-
-        // Send a message to the client
-        const hbsObject = {
-            article: result
-        }
-
-        res.render("index", hbsObject);
     });
 });
 
