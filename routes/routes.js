@@ -60,5 +60,21 @@ router.get("/", function (req, res) {
     // });
 });
 
+router.get("/saved", function (req, res) {
+    db.Article.find({saved: true})
+        .then(function(dbArticles) {
+            // Render the results to Handlebars
+            const hbsObject = {
+                article: dbArticles
+            }
+
+            res.render("saved", hbsObject);
+            console.log("hbsObject:", hbsObject)
+        })
+        .catch(function(err) {
+            console.log(err)
+        })
+});
+
 // Export routes for server.js to use.
 module.exports = router;
