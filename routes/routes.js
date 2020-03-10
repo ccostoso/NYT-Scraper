@@ -76,5 +76,28 @@ router.get("/saved", function (req, res) {
         })
 });
 
+router.put("/:id", function(req, res) {
+    const id = req.params.id;
+    db.Article
+        .updateOne({ _id: id }, { $set: { saved: true } })
+        .then(response => {
+            res.json(response);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+})
+
+router.delete("/:id", function(req, res) {
+    const id = req.params.id;
+    db.Article
+        .updateOne({ _id: id })
+        .then(response => {
+            res.json(response);
+        }).catch(err => {
+            console.log(err);
+        })
+})
+
 // Export routes for server.js to use.
 module.exports = router;
