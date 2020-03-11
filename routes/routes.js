@@ -96,6 +96,7 @@ router.get("/saved", (req, res) => {
 
 router.put("/:id", (req, res) => {
     const id = req.params.id;
+    console.log("id:", id);
     db.Article
     .findOne({
         _id: id
@@ -105,6 +106,7 @@ router.put("/:id", (req, res) => {
             db.Article
             .updateOne({ _id: id }, { $set: { saved: false } })
             .then(response => {
+                console.log("now false");
                 res.json(response);
             })
             .catch(err => {
@@ -114,6 +116,7 @@ router.put("/:id", (req, res) => {
             db.Article
             .updateOne({ _id: id }, { $set: { saved: true } })
             .then(response => {
+                console.log("now true");
                 res.json(response);
             })
             .catch(err => {

@@ -1,11 +1,11 @@
 $( document ).ready(function() {
-    $(".add-favorite").on("click", function(e) {
+    $(".switch-favorite").on("click", function(e) {
         e.preventDefault();
         const id = $(this).data("id");
         console.log("_id:", id);
 
         $.ajax({
-            url: '/:id',
+            url: `/${id}`,
             method: 'PUT',
             data: id
         })
@@ -24,12 +24,14 @@ $( document ).ready(function() {
             method: 'DELETE',
             data: id
         }).then(function() {
-            $.ajax({
-                url: '/',
-                method: 'GET'
-            }).then(function(res) {
-                console.log(res);
-            })
+            // $.ajax({
+            //     url: '/',
+            //     method: 'GET'
+            // }).then(function(res) {
+            //     console.log(res);
+                
+                location.reload();
+            // })
         })
     })
 });
