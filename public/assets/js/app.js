@@ -22,16 +22,9 @@ $( document ).ready(function() {
         $.ajax({
             url: '/reset',
             method: 'DELETE',
-            data: id
-        }).then(function() {
-            // $.ajax({
-            //     url: '/',
-            //     method: 'GET'
-            // }).then(function(res) {
-            //     console.log(res);
-                
-                location.reload();
-            // })
-        })
-    })
+            data: {}
+        }).then(function(res) {
+            // res.end();
+        });
+    });
 });
