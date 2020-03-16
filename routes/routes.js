@@ -29,12 +29,11 @@ router.get("/", (req, res) => {
                 // ...render the results in the Handlebars.
                 return renderHbs(dbArticles, "index", res);
 
-                // Otherwise, run Axios to provide entries for the Article collection.
+            // Otherwise, run Axios to provide entries for the Article collection.
             }
+
             // We grab the body of the html with axios
             axios.get("http://www.nytimes.com/").then(response => {
-
-                debugger
 
                 // Then, we load that into cheerio and save it to $ for a shorthand selector
                 const $ = cheerio.load(response.data);
@@ -57,7 +56,6 @@ router.get("/", (req, res) => {
                         .parent()
                         .attr("href");
                     result.saved = false;
-                    console.log("result:", result);
 
                     // Create a new Article using the `result` object built from scraping
                     db.Article
@@ -98,18 +96,19 @@ router.get("/saved", (req, res) => {
 });
 
 router.put("/:id", (req, res) => {
+    // Create id variable from entry _id
     const id = req.params.id;
-    console.log("id:", id);
     db.Article
         .findOne({
             _id: id
         })
         .then(response => {
+            // If the entry has a "true" value for the "saved" property
             if (response.saved) {
                 db.Article
+                // Make it false...
                     .updateOne({ _id: id }, { $set: { saved: false } })
                     .then(response => {
-                        console.log("now false");
                         return res.json(response);
                     })
                     .catch(err => {
@@ -117,9 +116,9 @@ router.put("/:id", (req, res) => {
                     })
             } else {
                 db.Article
+                // ...Otherwise, make it true.
                     .updateOne({ _id: id }, { $set: { saved: true } })
                     .then(response => {
-                        console.log("now true")
                         return res.json(response);
                     })
                     .catch(err => {
@@ -134,10 +133,10 @@ router.put("/:id", (req, res) => {
 
 router.delete("/reset", (req, res) => {
     db.Article
+        // Delete all articles
         .deleteMany(req.body.data)
         .then(response => {
-            // console.log(response);
-            return res.json(response).end();
+            return res.json(response);
         })
         .catch(err => {
             console.log(err);
@@ -155,8 +154,6 @@ router.delete("/reset", (req, res) => {
 //             console.log(err);
 //         })
 // })
-
-
 
 // Export routes for server.js to use.
 module.exports = router;
