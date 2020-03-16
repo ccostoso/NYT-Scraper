@@ -34,6 +34,7 @@ router.get("/", (req, res) => {
 
             // We grab the body of the html with axios
             axios.get("http://www.nytimes.com/").then(response => {
+                console.log("RESPONSE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 
                 // Then, we load that into cheerio and save it to $ for a shorthand selector
                 const $ = cheerio.load(response.data);

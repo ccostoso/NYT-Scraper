@@ -1,5 +1,12 @@
-$( document ).ready(function() {
-    $(".switch-favorite").on("click", function(e) {
+$(document).ready(function () {
+    $.ajax({
+        url: '/',
+        method: 'GET'
+    }).then(function () {
+
+    })
+
+    $(".switch-favorite").on("click", function (e) {
         e.preventDefault();
         const id = $(this).data("id");
         console.log("_id:", id);
@@ -9,22 +16,28 @@ $( document ).ready(function() {
             method: 'PUT',
             data: id
         })
-        .then(function() {
+        .then(function () {
             location.reload();
         })
     });
 
-    $("#reset").on("click", function(e) {
+    $("#reset").on("click", function (e) {
         e.preventDefault();
 
         $("main").empty();
-        
+
         $.ajax({
             url: '/reset',
             method: 'DELETE',
             data: {}
-        }).then(function(res) {
-            // res.end();
+        }).then(function () {
+            $.ajax({
+                url: '/',
+                method: 'GET',
+            }).then(function (res) {
+                // res.end();
+                location.reload();
+            })
         });
     });
 });
