@@ -26,14 +26,8 @@ router.get("/", (req, res) => {
             // If there are documents in the Article collection... 
             if (dbArticles.length !== 0) {
                 console.log(dbArticles.length);
-                // // ...render the results in the Handlebars.
-                // renderHbs(dbArticles, "index", res);
-                const hbsObject = {
-                    article: dbArticles
-                }
-
-                console.log("hbsObject:", hbsObject);
-                return res.render("index", hbsObject);
+                // ...render the results in the Handlebars.
+                return renderHbs(dbArticles, "index", res);
 
                 // Otherwise, run Axios to provide entries for the Article collection.
             }
@@ -83,13 +77,7 @@ router.get("/", (req, res) => {
                     .find({})
                     .then(dbArticles => {
                         // ...and render the results in the Handlebars.
-                        // renderHbs(dbArticles, "index", res);
-                        const hbsObject = {
-                            article: dbArticles
-                        }
-
-                        console.log("hbsObject:", hbsObject);
-                        return res.render("index", hbsObject).end();
+                        return renderHbs(dbArticles, "index", res);
                     })
             });
         })
@@ -102,7 +90,7 @@ router.get("/saved", (req, res) => {
     db.Article.find({ saved: true })
         .then(dbArticles => {
             // Render the results to Handlebars
-            renderHbs(dbArticles, "saved", res);
+            return renderHbs(dbArticles, "saved", res);
         })
         .catch(err => {
             console.log(err)
