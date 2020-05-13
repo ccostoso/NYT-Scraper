@@ -1,5 +1,6 @@
 .jumbotron {
     background-image: url('/assets/img/header.jpg');
+    background-size: cover;
 }
 
 .jumbotron .container-fluid {
